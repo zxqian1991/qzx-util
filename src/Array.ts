@@ -114,3 +114,43 @@ export function toMap<T, K>(arr: T[], getKey: (i: T) => K) {
   });
   return map;
 }
+
+/**
+ * 讲一个数组以size为一组组成新的数组
+ * @param arr 需要处理的函数
+ * @param size 组的大小
+ * @returns
+ */
+export function chunk<T>(arr: T[], size: number) {
+  const res: T[][] = [];
+  let temp: T[] = [];
+  for (let i = 0; i < arr.length; i++) {
+    const tail = i % size;
+    if (tail === 0) {
+      temp = [];
+      res.push(temp);
+    }
+    temp.push(arr[i]);
+  }
+  return res;
+}
+
+/**
+ * 将一个复杂的嵌套着的数组展开
+ * @param arr
+ * @param level
+ * @returns
+ */
+export function flattern<K = any, T = any>(arr: T[], level = 1): K[] {
+  if (level === 0) return arr as any;
+  const res: K[] = [];
+  for (let i = 0; i < arr.length; i++) {
+    const value = arr[i];
+    if (Array.isArray(value)) {
+      flattern<K, T>(value, level - 1).forEach((t) => res.push(t));
+    } else {
+      res.push(value as any);
+    }
+  }
+  return res;
+}

@@ -41,7 +41,7 @@ export function isArray<T>(v: T) {
 export function isNull<T>(v: T) {
   return v === null;
 }
-interface IsObjectOpt {
+export interface IsObjectOpt {
   includeArr?: boolean; // 是否包含数组  默认包含
   includeNull?: boolean; // 是否包含null 默认不包含
 }
