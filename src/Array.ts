@@ -1,3 +1,5 @@
+import { min } from "./number";
+
 export interface IArrayDiff<T> {
   deleted: T[];
   added: T[];
@@ -153,4 +155,35 @@ export function flattern<K = any, T = any>(arr: T[], level = 1): K[] {
     }
   }
   return res;
+}
+
+/**
+ * 把a2的值 赋值给a1
+ * 希望的是直接改变里面的内容
+ * 1. a1比较长的话 需要把多出的元素删除
+ * 2. a1比较短的话 需要新增元素
+ * @param a1
+ * @param a2
+ * @returns
+ */
+export function mergeArray(a1: any[], a2: any[]) {
+  const l1 = a1.length;
+  const l2 = a2.length;
+  const minL = min(l1, l2);
+  for (let i = 0; i < minL; i++) {
+    a1[i] = a2[i];
+  }
+  // 说明a2小一点
+  if (l1 > minL) {
+    for (let i = minL; i < l1; i++) {
+      a1.pop();
+    }
+  }
+  // 说明a1小一点
+  if (l2 > minL) {
+    for (let i = minL; i < l2; i++) {
+      a1.push(a2[i]);
+    }
+  }
+  return a1;
 }
